@@ -5,13 +5,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-
 public class Calculate {
 	static Scanner scanner = new Scanner(System.in);
 	//正则判断是否为数字选项
 	public static boolean isNumeric(String str)
 	{ 
-		   Pattern pattern = Pattern.compile("[0-9]*"); 
+		   Pattern pattern = Pattern.compile("^\\d+(\\.\\d+)?$"); 
 		   Matcher isNum = pattern.matcher(str);
 		   if( !isNum.matches() ){
 		       return false; 
@@ -83,68 +82,177 @@ public class Calculate {
 		
 		public static void CompoundingCalculation() 
 		{
-			double money,rate=0;
-			double sum1=0;
-			int years;
+			String money,rate,years;
+			int Year=0;
+			double Rate=0,Money=0,sum1=0;
 			System.out.println("请输入本金:");
-			money = scanner.nextDouble(); // 本金
-			System.out.println("请输入存款年数:");
-			years = scanner.nextInt(); // 存钱年数
-			System.out.println("请输入年利率:");
-			rate = scanner.nextDouble(); // 利率
-			for (int i = 1; i <= years; i++) 
+			money = scanner.next();
+			if(isNumeric(money))
 			{
-				sum1 = money*Math.pow(1.0 + rate, years);	
+				Money = StringToDouble(money);
 			}
-			System.out.println("存入第" + years + "年后的存款总额为：" + sum1);
+			else
+			{
+				System.out.println("输入错误!,请重新输入!");
+				CompoundingCalculation(); 
+			}
+			System.out.println("请输入存款年数:");
+			years = scanner.next();
+			if(isNumeric(years))
+			{
+				Year = StringToInt(years);
+			}
+			else
+			{
+				System.out.println("输入错误!,请重新输入!");
+				CompoundingCalculation();
+			}
+			System.out.println("请输入年利率:");
+			rate = scanner.next();
+			if(isNumeric(rate))
+			{
+				Rate = StringToDouble(rate);
+			}
+			else
+			{
+				System.out.println("输入错误!,请重新输入!");
+				CompoundingCalculation();
+			}
+			for (int i = 1; i <= Year; i++) 
+			{
+				sum1 = Money*Math.pow(1.0 + Rate, Year);	
+			}
+			System.out.println("存入第" + Year + "年后的存款总额为：" + sum1);
 			main(null);
 		}
 		
 		public static void SimpleInterestCalculation()
 		{
-			double money,rate,interest;
-			double sum1=0;
-			int years;
+			String money,rate,years;
+			double Money=0,sum1=0,Rate=0,interest=0;
+			int Year=0;
 			System.out.println("请输入本金:");
-			money = scanner.nextDouble(); // 本金
+			money = scanner.next();
+			if(isNumeric(money))
+			{
+				Money = StringToDouble(money);
+			}
+			else
+			{
+				System.out.println("输入错误!,请重新输入!");
+				SimpleInterestCalculation(); 
+			}
 			System.out.println("请输入存款年数:");
-			years = scanner.nextInt(); // 存钱年数
+			years = scanner.next();
+			if(isNumeric(years))
+			{
+				Year = StringToInt(years);
+			}
+			else
+			{
+				System.out.println("输入错误!,请重新输入!");
+				SimpleInterestCalculation(); 
+			}
 			System.out.println("请输入年利率:");
-			rate = scanner.nextDouble(); // 利率
-			interest = money*rate*years;
-			sum1 = money+interest;
-			System.out.println("存入第" + years + "年后的存款总额为：" + sum1);
+			rate = scanner.next();
+			if(isNumeric(rate))
+			{
+				Rate = StringToDouble(rate);
+			}
+			else
+			{
+				System.out.println("输入错误!,请重新输入!");
+				SimpleInterestCalculation(); 
+			}
+			interest = Money*Rate*Year;
+			sum1 = Money+interest;
+			System.out.println("存入第" + Year + "年后的存款总额为：" + sum1);
 			main(null);
 		}
 		
 		public static void PrincipalCalculation()
 		{	
-			double money = 0;
-			double ExpectedPrincipal,rate;
-			int years;
+			String ExpectedPrincipal,rate,years;
+			double Rate=0,ExpectedPrincipalMoney=0,money = 0;
+			int Year = 0;
 			System.out.println("预期金额");
-			ExpectedPrincipal = scanner.nextDouble();
+			ExpectedPrincipal = scanner.next();
+			if(isNumeric(ExpectedPrincipal))
+			{
+				ExpectedPrincipalMoney = StringToDouble(ExpectedPrincipal);
+			}
+			else
+			{
+				System.out.println("输入错误!,请重新输入!");
+				PrincipalCalculation(); 
+			}
 			System.out.println("请输入存款年数:");
-			years = scanner.nextInt(); // 存钱年数
+			years = scanner.next();
+			if(isNumeric(years))
+			{
+				Year = StringToInt(years);
+			}
+			else
+			{
+				System.out.println("输入错误!,请重新输入!");
+				PrincipalCalculation(); 
+			}
 			System.out.println("请输入年利率:");
-			rate = scanner.nextDouble(); // 利率
-			money = ExpectedPrincipal/Math.pow(1.0 + rate, years);
+			rate = scanner.next();
+			if(isNumeric(rate))
+			{
+				Rate = StringToDouble(rate);
+			}
+			else
+			{
+				System.out.println("输入错误!,请重新输入!");
+				PrincipalCalculation(); 
+			}
+			money = ExpectedPrincipalMoney/Math.pow(1.0 + Rate, Year);
 			System.out.println("初始本金为(复利算法)" + money);
-			money = ExpectedPrincipal/(1+rate*years);
+			money = ExpectedPrincipalMoney/(1+Rate*Year);
 			System.out.println("初始本金为(单利算法)" + money);
 			main(null);
 		}
 		
 		public static void CalculateRewardTime()
 		{
-			double ExpectedPrincipal,rate,money,year;
+			double year = 0,ExpectedPrincipalMoney = 0,Rate = 0,Money = 0;
+			String ExpectedPrincipal,rate,money;
 			System.out.println("预期金额");
-			ExpectedPrincipal = scanner.nextDouble();
+			ExpectedPrincipal = scanner.next();
+			if(isNumeric(ExpectedPrincipal))
+			{
+				ExpectedPrincipalMoney = StringToDouble(ExpectedPrincipal);
+			}
+			else
+			{
+				System.out.println("输入错误!,请重新输入!");
+				CalculateRewardTime(); 
+			}
 			System.out.println("请输入年利率:");
-			rate = scanner.nextDouble(); // 利率
+			rate = scanner.next();
+			if(isNumeric(rate))
+			{
+				Rate = StringToDouble(rate);
+			}
+			else
+			{
+				System.out.println("输入错误!,请重新输入!");
+				CalculateRewardTime(); 
+			}
 			System.out.println("本金");
-			money = scanner.nextDouble();
-			year =  log((ExpectedPrincipal/money),1+rate);
+			money = scanner.next();
+			if(isNumeric(money))
+			{
+				Money = StringToDouble(money);
+			}
+			else
+			{
+				System.out.println("输入错误!,请重新输入!");
+				CalculateRewardTime(); 
+			}
+			year =  log((ExpectedPrincipalMoney/Money),1+Rate);
 			System.out.println("年份" + Math.ceil(year));
 			main(null);
 		}
@@ -156,14 +264,44 @@ public class Calculate {
 
 		public static void CalculateInterest()
 		{
-			double ExpectedPrincipal,rate,money,year;
+			double ExpectedPrincipalMoney = 0,Money = 0;
+			int Year = 0;
+			String ExpectedPrincipal,years,money;
+			double rate = 0;
 			System.out.println("预期金额");
-			ExpectedPrincipal = scanner.nextDouble();
+			ExpectedPrincipal = scanner.next();
+			if(isNumeric(ExpectedPrincipal))
+			{
+				ExpectedPrincipalMoney = StringToDouble(ExpectedPrincipal);
+			}
+			else
+			{
+				System.out.println("输入错误!,请重新输入!");
+				CalculateInterest(); 
+			}
 			System.out.println("请输入年份:");
-			year = scanner.nextDouble(); // 利率
+			years = scanner.next();
+			if(isNumeric(years))
+			{
+				Year = StringToInt(years);
+			}
+			else
+			{
+				System.out.println("输入错误!,请重新输入!");
+				CalculateInterest(); 
+			}
 			System.out.println("本金");
-			money = scanner.nextDouble();
-			rate = Math.pow((ExpectedPrincipal/money), 1/year)-1;
+			money = scanner.next();
+			if(isNumeric(money))
+			{
+				Money = StringToDouble(money);
+			}
+			else
+			{
+				System.out.println("输入错误!,请重新输入!");
+				CalculateInterest(); 
+			}
+			rate = Math.pow((ExpectedPrincipalMoney/Money), 1/Year)-1;
 			System.out.println("利率" + rate);
 			main(null);
 		}
@@ -171,82 +309,159 @@ public class Calculate {
 		public static void IncreasingInterestInvestmentQuota()
 		{
 			System.out.println("每年定额选1，每月定额选2");
-			int choice = scanner.nextInt();
-			switch(choice)
+			String choice = scanner.next();
+			if(isNumeric(choice))
 			{
-			case 1:
-				EachYear();
-				break;
-			case 2:
-				EachMonth();
-				break;
+				switch(StringToInt(choice))
+				{
+				case 1:
+					EachYear();
+					break;
+				case 2:
+					EachMonth();
+					break;
+				}
 			}
+			else
+			{
+				System.out.println("输入错误!,请重新输入!");
+				IncreasingInterestInvestmentQuota();
+			}	
 		}
 
 		public static void EachYear() 
 		{
-			double EachYearQuotaMoney,rate;
-			int years;
-			double sum1 = 0 ;
+			double EachYearQuotaMoney = 0,Rate = 0,sum1 = 0;
+			int Year = 0;
+			String years,EachYearQuotaMoney1,rate;
 			System.out.println("每年定额资本");
-			EachYearQuotaMoney = scanner.nextDouble();
-			System.out.println("请输入存款年数:");
-			years = scanner.nextInt(); // 存钱年数
-			System.out.println("请输入年利率:");
-			rate = scanner.nextDouble(); // 利率
-			for (int i = 1; i <= years; i++) 
+			EachYearQuotaMoney1 = scanner.next();
+			if(isNumeric(EachYearQuotaMoney1))
 			{
-				sum1 = (sum1+EachYearQuotaMoney)*Math.pow((1.0 + rate), i);
+				EachYearQuotaMoney = StringToDouble(EachYearQuotaMoney1);
 			}
-			System.out.println("存入第" + years + "年后的存款总额为：" + sum1);
-			System.out.println(EachYearQuotaMoney);
+			else
+			{
+				System.out.println("输入错误!,请重新输入!");
+				EachYear();  
+			}
+			System.out.println("请输入存款年数:");
+			years = scanner.next(); // 存钱年数
+			if(isNumeric(years))
+			{
+				Year = StringToInt(years);
+			}
+			else
+			{
+				System.out.println("输入错误!,请重新输入!");
+				EachYear(); 
+			}
+			System.out.println("请输入年利率:");
+			rate = scanner.next();
+			if(isNumeric(rate))
+			{
+				Rate = StringToDouble(rate);
+			}
+			else
+			{
+				System.out.println("输入错误!,请重新输入!");
+				EachYear(); 
+			}	
+			sum1 = EachYearQuotaMoney*(1+Rate)*(-1+Math.pow(1+Rate, Year))/Rate;
+			System.out.println("存入第" + Year + "年后的存款总额为：" + sum1);
 			main(null);	
 		}
 
 		public static void EachMonth() 
 		{
-			double EachMonthQuotaMoney,MonthRate;
-			int Months;
-			double sum1 = 0 ;
+			double EachMonthQuotaMoney1 = 0,MonthRate1 = 0,sum1 = 0;
+			int Months1 = 0;
+			String EachMonthQuotaMoney,MonthRate,Months;
 			System.out.println("每月定额资本");
-			EachMonthQuotaMoney = scanner.nextDouble();
-			System.out.println("请输入存款月数:");
-			Months = scanner.nextInt(); // 存钱年数
-			System.out.println("请输入月利率:");
-			MonthRate = scanner.nextDouble(); // 利率
-			sum1 = 0 ;
-			for (int i = 1; i <= Months; i++) 
+			EachMonthQuotaMoney = scanner.next();
+			if(isNumeric(EachMonthQuotaMoney))
 			{
-				sum1 = (sum1+EachMonthQuotaMoney)*Math.pow((1.0 + MonthRate), Months);
+				EachMonthQuotaMoney1 = StringToDouble(EachMonthQuotaMoney);
 			}
-			System.out.println("存入第" + Months + "月后的存款总额为：" + sum1+EachMonthQuotaMoney);
+			else
+			{
+				System.out.println("输入错误!,请重新输入!");
+				EachMonth(); 
+			}
+			System.out.println("请输入存款月数:");
+			Months = scanner.next();
+			if(isNumeric(Months))
+			{
+				Months1 = StringToInt(Months);
+			}
+			else
+			{
+				System.out.println("输入错误!,请重新输入!");
+				EachMonth(); 
+			}
+			System.out.println("请输入月利率:");
+			MonthRate = scanner.next();
+			if(isNumeric(MonthRate))
+			{
+				MonthRate1 = StringToDouble(MonthRate);
+			}
+			else
+			{
+				System.out.println("输入错误!,请重新输入!");
+				EachMonth(); 
+			}
+			sum1 = EachMonthQuotaMoney1*(1+MonthRate1)*(-1+Math.pow(1+MonthRate1, Months1))/MonthRate1;
+			System.out.println("存入第" + Months1 + "月后的存款总额为：" + sum1);
 			main(null);	
 		}
 		
 		public static void MatchingInterestRepaymentCalculator()
 		{
-			double money,rate,interest;
-			double Repayment = 0;
-			double Repayment1 = 0;
-			double sum1 = 0;
-			double sum = 0;
-			int years;
+			String money,rate,years;
+			double Money = 0,Rate = 0,interest,Repayment = 0,Repayment1 = 0,sum1 = 0,sum = 0;
+			int Year = 0;
 			System.out.println("请输入贷款金额数");
-			money = scanner.nextDouble();
-			System.out.println("请输入贷款年限");
-			years = scanner.nextInt();
-			System.out.println("请输入贷款年利率");
-			rate = scanner.nextDouble();
-			//复利
-			for (int i = 1; i <= years; i++) 
+			money = scanner.next();
+			if(isNumeric(money))
 			{
-				sum1 = money*Math.pow(1.0 + rate, years);	
+				Money = StringToDouble(money);
 			}
-			Repayment = sum1/(years*12);
-			
-			interest = money*rate*years;
-			sum = money+interest;
-			Repayment1 = sum/(years*12);
+			else
+			{
+				System.out.println("输入错误!,请重新输入!");
+				MatchingInterestRepaymentCalculator();
+			}
+			System.out.println("请输入贷款年限");
+			years = scanner.next();
+			if(isNumeric(years))
+			{
+				Year = StringToInt(years);
+			}
+			else
+			{
+				System.out.println("输入错误!,请重新输入!");
+				MatchingInterestRepaymentCalculator();
+			}
+			System.out.println("请输入贷款年利率");
+			rate = scanner.next();
+			if(isNumeric(rate))
+			{
+				Rate = StringToDouble(rate);
+			}
+			else
+			{
+				System.out.println("输入错误!,请重新输入!");
+				MatchingInterestRepaymentCalculator();
+			}
+			//复利
+			for (int i = 1; i <= Year; i++) 
+			{
+				sum1 = Money*Math.pow(1.0 + Rate, Year);	
+			}
+			Repayment = sum1/(Year*12);
+			interest = Money*Rate*Year;
+			sum = Money+interest;
+			Repayment1 = sum/(Year*12);
 			System.out.println("每月需要还款(单利)" + Repayment1);
 			System.out.println("每月需要还款(复利)" + Repayment);
 		}
